@@ -15,6 +15,6 @@ systemctl enable shipping
 systemctl start shipping
 
 dnf install mysql -y
-mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -pRoboShop@1 < /app/schema/shipping.sql
+mysql -h mysql.devops-tools.online -uroot -pRoboShop@1 < /app/schema/shipping.sql
 
 systemctl restart shipping
