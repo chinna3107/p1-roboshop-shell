@@ -1,5 +1,8 @@
 func_preq() {
 
+  echo -e "\e[36m>>>>>>>>>>>> Create ${component} service <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
+    cp ${component}.service /etc/systemd/system/${component}.service &>>${log}
+
   echo -e "\e[36m>>>>>>>>>>>> Create Application User <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
     useradd roboshop &>>${log}
 
@@ -31,9 +34,6 @@ systemctl restart ${component} &>>${log}
 func_nodejs() {
 log=/tmp/roboshop.log
 
-echo -e "\e[36m>>>>>>>>>>>> Create ${component} Service <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
-cp ${component}.service  /etc/systemd/system/${component}.service &>${log}
-
 echo -e "\e[36m>>>>>>>>>>>> Create Mongodb Repo <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
 cp mongo.repo /etc/yum.repos.d/mongo.repo &>>${log}
 
@@ -61,15 +61,13 @@ func_systemd
 func_java() {
 
   log=/tmp/roboshop.log
-  echo -e "\e[36m>>>>>>>>>>>> Create ${component} service <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
-  cp ${component}.service /etc/systemd/system/${component}.service &>>${log}
 
   echo -e "\e[36m>>>>>>>>>>>> Install Maven  <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
   dnf install maven -y &>>${log}
 
   func_preq
 
-  echo -e "\e[36m>>>>>>>>>>>> Build {component} service  <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
+  echo -e "\e[36m>>>>>>>>>>>> Build ${component} service  <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
   cd /app &>>${log}
   mvn clean package &>>${log}
   mv target/${component}-1.0.jar ${component}.jar &>>${log}
@@ -83,4 +81,18 @@ func_java() {
  func_systemd
 }
 
+func_python() {
+   log=/tmp/roboshop.log
 
+  echo -e "\e[36m>>>>>>>>>>>> Install python <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
+  dnf install python36 gcc python3-devel -y
+
+ func_preq
+
+
+  echo -e "\e[36m>>>>>>>>>>>> Build ${component} service  <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
+  pip3.6 install -r requirements.txt
+
+  func_systemd
+
+}
