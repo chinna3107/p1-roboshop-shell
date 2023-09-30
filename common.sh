@@ -2,7 +2,7 @@ func_exit_status() {
   if [ $? -eq 0 ]; then
     echo -e "\e[32m SUCCESS \e[0m"
   else
-    echo -e "\e[32m FAILURE \e[0m"
+    echo -e "\e[31m FAILURE \e[0m"
   fi
 }
 
@@ -13,8 +13,11 @@ func_preq() {
     func_exit_status
 
   echo -e "\e[36m>>>>>>>>>>>> Create Application User <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
-    useradd roboshop &>>${log}
-    func_exit_status
+    id roboshop &>>${log}
+    if [ $? -ne 0 ]; then
+      useradd roboshop &>>${log}
+    fi
+      func_exit_status
 
     echo -e "\e[36m>>>>>>>>>>>> Cleanup old Application content <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
     rm -rf /app &>>${log}
