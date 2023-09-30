@@ -1,10 +1,17 @@
-cp mysql.repo /etc/yum.repos.d/mysql.repo
+log=/tmp/roboshop.log
 
-dnf module disable mysql -y
+echo -e "\e[36m>>>>>>>>>>>> download MySql Repo <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
+cp mysql.repo /etc/yum.repos.d/mysql.repo &>>${log}
 
-dnf install mysql-community-server -y
+echo -e "\e[36m>>>>>>>>>>>>  Disable Old MySql  <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
+dnf module disable mysql -y &>>${log}
 
-systemctl enable mysqld
-systemctl restart mysqld
+echo -e "\e[36m>>>>>>>>>>>> Install Mysql <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
+dnf install mysql-community-server -y &>>${log}
 
-mysql_secure_installation --set-root-pass RoboShop@1
+echo -e "\e[36m>>>>>>>>>>>> Start Mysql Services <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
+systemctl enable mysqld &>>${log}
+systemctl restart mysqld &>>${log}
+
+echo -e "\e[36m>>>>>>>>>>>> Update default password <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
+mysql_secure_installation --set-root-pass RoboShop@1 &>>${log}

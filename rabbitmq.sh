@@ -1,7 +1,18 @@
-curl -s https://packagecloud.io/install/repositories/rabbitmq/erlang/script.rpm.sh | bash
-curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh | bash
-dnf install rabbitmq-server -y
-systemctl enable rabbitmq-server
-systemctl restart rabbitmq-server
-rabbitmqctl add_user roboshop roboshop123
-rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
+log=/tmp/roboshop.log
+
+echo -e "\e[36m>>>>>>>>>>>> Configure YUM Repos from the script provided by vendor <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
+curl -s https://packagecloud.io/install/repositories/rabbitmq/erlang/script.rpm.sh | bash  &>>${log}
+
+echo -e "\e[36m>>>>>>>>>>>> Configure YUM Repos for RabbitMQ <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
+curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh | bash &>>${log}
+
+echo -e "\e[36m>>>>>>>>>>>> Install RabbitMQ <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
+dnf install rabbitmq-server -y &>>${log}
+
+echo -e "\e[36m>>>>>>>>>>>> Start RabbitMQ Service <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
+systemctl enable rabbitmq-server &>>${log}
+systemctl restart rabbitmq-server &>>${log}
+
+echo -e "\e[36m>>>>>>>>>>>> update RabbitMQ default password and permissions <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
+rabbitmqctl add_user roboshop roboshop123 &>>${log}
+rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>>${log}
