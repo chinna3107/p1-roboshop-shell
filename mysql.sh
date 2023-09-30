@@ -2,6 +2,13 @@ source common.sh
 
 log=/tmp/roboshop.log
 
+mysql_root_password=$1
+if [ -z "${mysql_root_password}" ]; then
+  echo Input Password Missing
+  eixt 1
+ fi
+
+
 echo -e "\e[36m>>>>>>>>>>>> download MySql Repo <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
 cp mysql.repo /etc/yum.repos.d/mysql.repo &>>${log}
 func_exit_status
@@ -20,5 +27,5 @@ systemctl restart mysqld &>>${log}
 func_exit_status
 
 echo -e "\e[36m>>>>>>>>>>>> Update default password <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
-mysql_secure_installation --set-root-pass RoboShop@1 &>>${log}
+mysql_secure_installation --set-root-pass ${mysql_root_password} &>>${log}
 func_exit_status
