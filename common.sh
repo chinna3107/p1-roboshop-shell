@@ -1,4 +1,4 @@
-func_appprereq() {
+func_preq() {
 
   echo -e "\e[36m>>>>>>>>>>>> Create Application User <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
     useradd roboshop &>>${log}
@@ -43,7 +43,7 @@ curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log}
 echo -e "\e[36m>>>>>>>>>>>> Install NodeJS <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
 dnf install nodejs -y &>>${log}
 
-func_appprereq
+func_preq
 
 echo -e "\e[36m>>>>>>>>>>>> Download NodeJS Dependencies <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
 npm install &>>${log}
@@ -67,7 +67,7 @@ func_java() {
   echo -e "\e[36m>>>>>>>>>>>> Install Maven  <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
   dnf install maven -y &>>${log}
 
-  func_appprereq()
+  func_preq
 
   echo -e "\e[36m>>>>>>>>>>>> Build {component} service  <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
   cd /app &>>${log}
