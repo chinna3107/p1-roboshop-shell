@@ -52,7 +52,7 @@ echo -e "\e[36m>>>>>>>>>>>> Install Mongo Client <<<<<<<<< \e[0m" | tee -a /tmp/
 dnf install mongodb-org-shell -y &>>${log}
 
 echo -e "\e[36m>>>>>>>>>>>> Load ${component} schema <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
-mongo --host mongodb.devops-tools.online </app/schema/${component} &>>${log}
+mongo --host mongodb.devops-tools.online </app/schema/${component}.sql &>>${log}
 
 func_systemd
 
@@ -72,13 +72,13 @@ func_java() {
   echo -e "\e[36m>>>>>>>>>>>> Build {component} service  <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
   cd /app &>>${log}
   mvn clean package &>>${log}
-  mv target/{component}-1.0.jar ${component}.jar &>>${log}
+  mv target/${component}-1.0.jar ${component}.jar &>>${log}
 
   echo -e "\e[36m>>>>>>>>>>>> Install mysql client  <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
   dnf install mysql -y &>>${log}
 
   echo -e "\e[36m>>>>>>>>>>>> Load Schema <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
-  mysql -h mysql.devops-tools.online -uroot -pRoboShop@1 < /app/schema/{component}.sql &>>${log}
+  mysql -h mysql.devops-tools.online -uroot -pRoboShop@1 < /app/schema/${component}.sql &>>${log}
 
  func_systemd
 }
