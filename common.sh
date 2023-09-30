@@ -21,6 +21,29 @@ func_preq() {
 
 }
 
+func_schema_setup() {
+
+ log=/tmp/roboshop.log
+
+if [ "${schema_steup}" == "mongodb" ] then
+
+echo -e "\e[36m>>>>>>>>>>>> Install Mongo Client <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
+dnf install mongodb-org-shell -y &>>${log}
+
+echo -e "\e[36m>>>>>>>>>>>> Load ${component} schema <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
+mongo --host mongodb.devops-tools.online </app/schema/${component}.sql &>>${log}
+
+fi
+
+if [ "${schema_steup}" == "mysql" ] then
+echo -e "\e[36m>>>>>>>>>>>> Install mysql client  <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
+  dnf install mysql -y &>>${log}
+
+  echo -e "\e[36m>>>>>>>>>>>> Load Schema <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
+  mysql -h mysql.devops-tools.online -uroot -pRoboShop@1 < /app/schema/${component}.sql &>>${log}
+fi
+
+}
 
 func_systemd() {
 
@@ -55,29 +78,6 @@ func_systemd
 
 }
 
-func_schema_setup() {
-
- log=/tmp/roboshop.log
-
-if [ "${schema_steup}" == "mongodb" ] then
-
-echo -e "\e[36m>>>>>>>>>>>> Install Mongo Client <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
-dnf install mongodb-org-shell -y &>>${log}
-
-echo -e "\e[36m>>>>>>>>>>>> Load ${component} schema <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
-mongo --host mongodb.devops-tools.online </app/schema/${component}.sql &>>${log}
-
-fi
-
-if [ "${schema_steup}" == "mysql" ] then
-echo -e "\e[36m>>>>>>>>>>>> Install mysql client  <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
-  dnf install mysql -y &>>${log}
-
-  echo -e "\e[36m>>>>>>>>>>>> Load Schema <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
-  mysql -h mysql.devops-tools.online -uroot -pRoboShop@1 < /app/schema/${component}.sql &>>${log}
-fi
-
-}
 
 func_java() {
 
