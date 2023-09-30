@@ -85,13 +85,12 @@ func_python() {
    log=/tmp/roboshop.log
 
   echo -e "\e[36m>>>>>>>>>>>> Install python <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
-  dnf install python36 gcc python3-devel -y
+  dnf install python36 gcc python3-devel -y &>>${log}
 
  func_preq
 
-
   echo -e "\e[36m>>>>>>>>>>>> Build ${component} service  <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
-  pip3.6 install -r requirements.txt
+  pip3.6 install -r requirements.txt &>>${log}
 
   func_systemd
 
