@@ -13,7 +13,7 @@ func_preq() {
     mkdir /app &>>${log}
 
     echo -e "\e[36m>>>>>>>>>>>> Download application content  <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
-    curl -L -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>>${log}
+    curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>>${log}
     cd /app &>>${log}
 
     echo -e "\e[36m>>>>>>>>>>>> Extract Application Content <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
