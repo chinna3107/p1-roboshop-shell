@@ -5,7 +5,7 @@ log=/tmp/roboshop.log
 mysql_root_password=$1
 if [ -z "${mysql_root_password}" ]; then
   echo Input Password Missing
-  eixt 1
+  exit 1
  fi
 
 
