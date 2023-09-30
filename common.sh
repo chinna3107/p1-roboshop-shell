@@ -132,6 +132,8 @@ func_python() {
 
  func_preq
 
+ sed -i "s/rabbitmq_app_password/${rabbitmq_app_password}/" /etc/systemd/system/${commponenet}.service
+
   echo -e "\e[36m>>>>>>>>>>>> Build ${component} service  <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
   pip3.6 install -r requirements.txt &>>${log}
   func_exit_status
