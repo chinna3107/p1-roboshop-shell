@@ -1,3 +1,9 @@
+rabbitmq_app_password=$1
+if [ -z "${rabbitmq_app_password}" ]; then
+  echo Input Password Missing
+  exit 1
+ fi
+
 source common.sh
 
 log=/tmp/roboshop.log
@@ -20,6 +26,6 @@ systemctl restart rabbitmq-server &>>${log}
 func_exit_status
 
 echo -e "\e[36m>>>>>>>>>>>> update RabbitMQ default password and permissions <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
-rabbitmqctl add_user roboshop roboshop123 &>>${log}
+rabbitmqctl add_user roboshop ${rabbitmq_app_password} &>>${log}
 rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>>${log}
 func_exit_status
