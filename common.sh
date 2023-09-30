@@ -31,7 +31,7 @@ echo -e "\e[36m>>>>>>>>>>>> Install Mongo Client <<<<<<<<< \e[0m" | tee -a /tmp/
 dnf install mongodb-org-shell -y &>>${log}
 
 echo -e "\e[36m>>>>>>>>>>>> Load ${component} schema <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
-mongo --host mongodb.devops-tools.online </app/schema/${component}.sql &>>${log}
+mongo --host mongodb.devops-tools.online </app/schema/${component}.js &>>${log}
 
 fi
 
