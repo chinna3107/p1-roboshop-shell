@@ -41,11 +41,11 @@ echo -e "\e[36m>>>>>>>>>>>> Install Nodejs Repo<<<<<<<<< \e[0m" | tee -a /tmp/ro
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log}
 
 echo -e "\e[36m>>>>>>>>>>>> Install NodeJS <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
-dnf install nodejs -y &>>${log}
+yum install nodejs -y &>>${log}
 
-func_preq
+ func_preq
 
-func_schema_setup
+ func_schema_setup
 
 echo -e "\e[36m>>>>>>>>>>>> Download NodeJS Dependencies <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
 npm install &>>${log}
@@ -56,6 +56,8 @@ func_systemd
 }
 
 func_schema_setup() {
+
+ log=/tmp/roboshop.log
 
 if [ "${schema_steup}" == "mongodb" ] then
 
