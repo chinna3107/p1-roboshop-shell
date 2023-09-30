@@ -1,13 +1,12 @@
-source common.sh
-
-log=/tmp/roboshop.log
-
 mysql_root_password=$1
 if [ -z "${mysql_root_password}" ]; then
   echo Input Password Missing
   exit 1
  fi
 
+source common.sh
+
+log=/tmp/roboshop.log
 
 echo -e "\e[36m>>>>>>>>>>>> download MySql Repo <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
 cp mysql.repo /etc/yum.repos.d/mysql.repo &>>${log}
