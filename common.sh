@@ -1,4 +1,5 @@
 func_nodejs() {
+log=/tmp/roboshop.log
 
 echo -e "\e[36m>>>>>>>>>>>> Create Catalogue Service <<<<<<<<< \e[0m" | tee -a /tmp/roboshop.log
 cp catalogue.service  /etc/systemd/system/catalogue.service &>${log}
@@ -42,7 +43,6 @@ systemctl daemon-reload &>>${log}
 systemctl enable catalogue &>>${log}
 systemctl restart catalogue &>>${log}
   }
-
 
 
 
